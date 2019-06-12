@@ -1,0 +1,25 @@
+#
+# PowerShell Script(タスクの登録)
+# regist_task.ps1 ${タスク名}
+#
+$Execute = "{{node_home}}\connect_to_master.cmd"
+$WorkingDirectory = "{{node_home}}"
+$User = "{{admin_account}}"
+$Password = "{{admin_password}}"
+$TaskPath = '\'
+$TaskName = $args[0]
+$Description =  $args[0]
+
+$Trigger = New-ScheduledTaskTrigger -AtStartup
+$Action = New-ScheduledTaskAction -Execute $Execute -WorkingDirectory $WorkingDirectory
+$Settings = New-ScheduledTaskSettingsSet -MultipleInstances Parallel
+
+Register-ScheduledTask `
+  -TaskPath $TaskPath `
+  -TaskName $TaskName `
+  -Description $Description `
+  -Trigger $Trigger `
+  -Action $Action `
+  -User $User `
+  -Password $Password `
+  -Settings $Settings

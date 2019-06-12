@@ -1,0 +1,18 @@
+---
+packages_for_chocolatey:
+  - git
+  - jdk8
+  - googlechrome
+  - firefox
+  - gradle
+
+node_home: "{{hostvars['build_agent01']['node_home']}}"
+node_name01: "{{hostvars['build_agent01']['node_name01']}}"
+slave_jar_file_name: slave.jar
+jenkins_http_port: "{{hostvars['build_agent01']['jenkins_http_port']}}"
+jenkins_home_url: "http://{{hostvars['jenkins_master']['ansible_host']}}"
+
+admin_account: "{{hostvars['build_agent01']['ansible_user']}}"
+admin_password: "{{hostvars['build_agent01']['ansible_password']}}"
+
+scheduled_task_name: StartJenkinsJar

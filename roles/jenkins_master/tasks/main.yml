@@ -1,0 +1,12 @@
+---
+- include: work_directory.yml 
+- include: jdk8.yml 
+- include: yum.yml 
+- include: gradle.yml 
+- include: jenkins.yml 
+- include: jenkins_service.yml 
+- include: skip_set_up_wizard.yml 
+- include: specify_jnlp_port.yml
+- include: disable_jenkins_security.yml
+- include: create_node.yml
+- include: plugin.yml 

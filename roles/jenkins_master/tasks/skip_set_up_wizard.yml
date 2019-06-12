@@ -1,0 +1,8 @@
+---
+- name: Copy jenkins.install.InstallUtil.lastExecVersion
+  copy: 
+    src: "{{role_path}}/files/jenkins.install.InstallUtil.lastExecVersion"
+    dest: "{{ jenkins_home }}/jenkins.install.InstallUtil.lastExecVersion"
+    owner: "{{ jenkins_user }}"
+    group: "{{ jenkins_group }}"
+    mode: 0644

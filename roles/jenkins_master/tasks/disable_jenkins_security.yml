@@ -1,0 +1,15 @@
+---
+- name: Disable jenkins security
+  lineinfile:
+    path: "{{ jenkins_home }}/config.xml"
+    state: present
+    backrefs: yes
+    regexp: '<useSecurity>.*<\/useSecurity>'
+    line: '<useSecurity>false</useSecurity>'
+  register: disabled_jenkins_security
+- name: Restart jenkins
+  include: restart_jenkins.yml
+  when: disabled_jenkins_security.changed
+- name: Wait for jenkins up
+  include: wait_for_jenkins_up.yml
+  when: disabled_jenkins_security.changed

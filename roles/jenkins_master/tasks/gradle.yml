@@ -1,0 +1,21 @@
+---
+#- name: Download a gradle binary
+#  get_url: 
+#    url: https://services.gradle.org/distributions/gradle-4.1-bin.zip 
+#    dest: /root/soft/gradle-4.1-bin.zip
+- name: Copy Gradle bin
+  copy: 
+    src: "{{role_path}}/files/gradle-4.1-bin.zip"
+    dest: "{{ work_dir }}"
+- name: Create gradle directory
+  file: 
+    path: "{{ gradle_dir }}"
+    state: directory 
+    owner: root 
+    group: root 
+    mode: 666
+- name: Unzip gradle binary
+  unarchive: 
+    src: "{{ work_dir }}/gradle-4.1-bin.zip" 
+    dest: "{{ gradle_dir }}"
+    copy: no

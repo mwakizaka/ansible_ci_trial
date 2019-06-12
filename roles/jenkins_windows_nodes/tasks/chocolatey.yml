@@ -1,0 +1,13 @@
+---
+- name: Install Automated Testing Dependencies
+  win_chocolatey:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages_for_chocolatey }}"
+  register: install_dependencies
+- name: Reboot windows
+  include: reboot_windows.yml
+  when: install_dependencies.changed
+- name: wait_for_windows_up 
+  include: wait_for_windows_up.yml
+  when: install_dependencies.changed

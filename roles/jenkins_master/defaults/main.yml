@@ -1,0 +1,35 @@
+---
+# TODO: タスクファイル内のローカル変数の扱いの検討(現状、単一箇所でのみ参照されるファイルは原則パラメタ化しない方針)
+
+jenkins_user: jenkins
+jenkins_group: jenkins
+home_url: http://localhost
+
+# 現状、hostvarsでとるパラメータは記述が長くなりがちなので、defaults/main.yml内で変数として再定義する方針
+jenkins_http_port: "{{hostvars['jenkins_master']['jenkins_http_port']}}"
+jenkins_jnlp_port: "{{hostvars['jenkins_master']['jenkins_jnlp_port']}}"
+
+# TODO: work dirの権限(現状 root)
+work_dir:  /root/soft
+jenkins_home: /var/lib/jenkins # Jenkins home location
+
+package_for_jenkins:
+  - git
+  - unzip
+
+node_home: "{{hostvars['build_agent01']['node_home']}}"
+node_name01: "{{hostvars['build_agent01']['node_name01']}}"
+
+jenkins_params:
+  url: "{{ home_url }}:{{ jenkins_http_port }}"
+  # url_username: mwakizaka
+  # url_password: mwakizaka
+
+jenkins_plugins:
+  role-strategy:
+    enabled: yes
+  build-pipeline-plugin:
+    enabled: yes
+
+# TODO: gralde dirの権限(現状 root)
+gradle_dir: /opt/gradle

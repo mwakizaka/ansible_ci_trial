@@ -1,0 +1,29 @@
+---
+- name: Download slave.jar
+  win_get_url: 
+    url: "{{jenkins_home_url}}:{{jenkins_http_port}}/jnlpJars/{{slave_jar_file_name}}"
+    dest: '{{node_home}}\{{slave_jar_file_name}}'
+- name: Copy cmd file
+  win_template: 
+    src: "{{role_path}}/templates/connect_to_master.cmd.j2"
+    dest: '{{node_home}}\connect_to_master.cmd'
+- name: Instantiate ps file
+  template: 
+    src: "{{role_path}}/templates/regist_task.ps1.j2"
+    dest: '{{role_path}}/tmp/regist_task.ps1'
+  delegate_to: 127.0.0.1
+- name: Check task schedule if it's already registered
+  script: "{{role_path}}/files/check_task.ps1 {{scheduled_task_name}}"
+  register: task_info
+- name: Debug output
+  debug: var=task_info.stdout
+- name: Register the task
+  script: "{{role_path}}/tmp/regist_task.ps1 {{scheduled_task_name}}"
+  when: task_info.stdout == ""
+  register: register_task
+- name: Reboot windows
+  include: reboot_windows.yml
+  when: register_task.changed
+- name: wait_for_windows_up 
+  include: wait_for_windows_up.yml
+  when: register_task.changed

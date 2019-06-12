@@ -1,0 +1,8 @@
+---
+- name: Create directory
+  file: 
+    path: "{{ work_dir }}" 
+    state: directory 
+    owner: root 
+    group: root 
+    mode: 666

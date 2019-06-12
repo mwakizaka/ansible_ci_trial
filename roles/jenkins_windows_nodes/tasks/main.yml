@@ -1,0 +1,3 @@
+---
+- include: chocolatey.yml
+- include: connect_to_master.yml

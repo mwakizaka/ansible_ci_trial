@@ -1,0 +1,7 @@
+---
+- name: Install packages from yum
+  yum: 
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items: "{{ package_for_jenkins }}"

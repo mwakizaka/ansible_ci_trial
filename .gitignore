@@ -1,0 +1,7 @@
+### https://raw.github.com/github/gitignore/4db4bb6e20ded299466202bfcb5b07f5cf3325cd/Global/ansible.gitignore
+
+*.retry
+*.swp
+*.vagrant
+/tmp/*
+/inventory/host

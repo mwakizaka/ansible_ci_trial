@@ -1,0 +1,7 @@
+---
+- name: Wait until Jenkins starts
+  wait_for: 
+    host: localhost
+    port: "{{ jenkins_http_port }}"
+    delay: 20
+    timeout: 300 

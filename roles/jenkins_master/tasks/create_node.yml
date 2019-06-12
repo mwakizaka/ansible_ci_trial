@@ -1,0 +1,18 @@
+---
+- name: Download jenkins-cli jar
+  get_url: 
+    url: "{{ home_url }}:{{ jenkins_http_port }}/jnlpJars/jenkins-cli.jar"
+    dest: "{{ work_dir }}/jenkins-cli.jar"
+- name: Copy config.xml
+  template: 
+    src: "{{ role_path }}/templates/config.xml.j2"
+    dest: "{{ work_dir }}/config.xml"
+  # TODO: Make a variable of label name. see: config.xml.j2 
+- name: Run jar to create node
+  shell: "java -jar jenkins-cli.jar -s {{ home_url }}:{{ jenkins_http_port }} create-node {{ node_name01 }} < {{ work_dir }}/config.xml"
+  args:
+    chdir: "{{ work_dir }}"
+  ignore_errors: True
+  ## FIXME: I don't want to ignore but no idea how to avoid the error, 
+  ##        as long as using jenkins-cli.jar. (Seems to have no function 
+  ##        to see if a node with a specified name exists)

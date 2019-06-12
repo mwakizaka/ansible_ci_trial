@@ -1,0 +1,9 @@
+---
+- hosts: Jenkins
+  become: True
+  roles:
+    - jenkins_master
+
+- hosts: Jenkins_Windows_Nodes
+  roles:
+    - jenkins_windows_nodes

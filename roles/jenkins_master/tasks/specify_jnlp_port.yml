@@ -1,0 +1,15 @@
+---
+- name: Specify JNLP port
+  lineinfile:
+    path: "{{ jenkins_home }}/config.xml"
+    state: present
+    backrefs: yes
+    regexp: '<slaveAgentPort>.*<\/slaveAgentPort>'
+    line: "<slaveAgentPort>{{ jenkins_jnlp_port }}</slaveAgentPort>"
+  register: specify_jnlp_port
+- name: Restart jenkins
+  include: restart_jenkins.yml
+  when: specify_jnlp_port.changed
+- name: Wait for jenkins up
+  include: wait_for_jenkins_up.yml
+  when: specify_jnlp_port.changed
